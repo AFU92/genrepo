@@ -39,9 +39,9 @@ pipx install genrepo
 Install from local artifacts (dist/):
 
 ```bash
-pip install dist/genrepo-0.1.5-py3-none-any.whl
+pip install dist/genrepo-0.1.6-py3-none-any.whl
 # or
-pip install dist/genrepo-0.1.5.tar.gz
+pip install dist/genrepo-0.1.6.tar.gz
 ```
 
 ## Quickstart (installed)

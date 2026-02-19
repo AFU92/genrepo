@@ -33,6 +33,7 @@ LABEL_REPOS: str = "repos"
 # Supported ORM identifiers
 ORM_SQLMODEL: str = "sqlmodel"
 ORM_SQLALCHEMY: str = "sqlalchemy"
+ORM_NONE: str = "none"
 
 # Template filenames (avoid string literals scattered in code)
 TPL_BASE_SQLMODEL_SYNC: str = "base_repository_sqlmodel_sync.j2"
@@ -65,4 +66,9 @@ ERR_INVALID_CONFIGURATION: str = "invalid configuration: {err}"
 ERR_MODEL_NOT_IMPORTABLE: str = (
     "could not import model: {import_path}. Create the model or adjust 'import_path'."
 )
-ERR_UNSUPPORTED_ORM: str = "unsupported orm: {orm}. Supported: sqlmodel, sqlalchemy"
+ERR_UNSUPPORTED_ORM: str = (
+    "unsupported orm: {orm}. Supported: sqlmodel, sqlalchemy, none"
+)
+ERR_STUB_ONLY_REQUIRES_NONE: str = (
+    "stub_only mode requires orm: none. Set orm to 'none' or disable stub_only."
+)

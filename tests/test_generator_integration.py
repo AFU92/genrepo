@@ -33,7 +33,7 @@ from genrepo.generator import generate_from_config
         (
             "\n".join(
                 [
-                    "orm: sqlmodel",
+                    "orm: none",
                     "output_dir: OUT/repositories",
                     "generation:",
                     "  mode: combined",
