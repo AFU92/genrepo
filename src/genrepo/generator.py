@@ -27,6 +27,7 @@ from .constants import (
     TPL_USER_STUB,
     ORM_SQLMODEL,
     ORM_SQLALCHEMY,
+    ORM_NONE,
     ERR_UNSUPPORTED_ORM,
 )
 from .constants import CRUD_METHODS
@@ -37,7 +38,7 @@ class TemplateSelector:
 
     @staticmethod
     def standalone_template(cfg: GenrepoConfig) -> str:
-        if cfg.generation.stub_only:
+        if cfg.generation.stub_only or cfg.orm == ORM_NONE:
             return TPL_STANDALONE_STUB
         if cfg.orm == ORM_SQLMODEL:
             return TPL_STANDALONE_SQLMODEL
@@ -47,7 +48,7 @@ class TemplateSelector:
 
     @staticmethod
     def base_template(cfg: GenrepoConfig) -> str:
-        if cfg.generation.stub_only:
+        if cfg.generation.stub_only or cfg.orm == ORM_NONE:
             return TPL_BASE_STUB
         if cfg.orm == ORM_SQLMODEL:
             return TPL_BASE_SQLMODEL_ASYNC if cfg.async_mode else TPL_BASE_SQLMODEL_SYNC

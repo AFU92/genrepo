@@ -176,7 +176,7 @@ CASES: list[tuple[str, dict, list[str], list[str]]] = [
     (
         "stub_only_base",
         {
-            "orm": "sqlmodel",
+            "orm": "none",
             "async_mode": False,
             "generation": {"mode": "base", "stub_only": True},
         },
@@ -186,9 +186,31 @@ CASES: list[tuple[str, dict, list[str], list[str]]] = [
     (
         "stub_only_standalone",
         {
-            "orm": "sqlmodel",
+            "orm": "none",
             "async_mode": False,
             "generation": {"mode": "standalone", "stub_only": True},
+            "allow_missing_models": True,
+            "models": DEFAULT_MODELS,
+        },
+        ["user_repository.py"],
+        ["class UserRepository", "TODO: implement get by primary key."],
+    ),
+    (
+        "none_base_stub",
+        {
+            "orm": "none",
+            "async_mode": False,
+            "generation": {"mode": "base"},
+        },
+        ["base_repository.py"],
+        ["class BaseRepository", "TODO: implement get by primary key."],
+    ),
+    (
+        "none_standalone_stub",
+        {
+            "orm": "none",
+            "async_mode": False,
+            "generation": {"mode": "standalone"},
             "allow_missing_models": True,
             "models": DEFAULT_MODELS,
         },

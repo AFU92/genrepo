@@ -23,6 +23,7 @@ from .constants import (
     ERR_MODELS_INVALID_VALUE,
     ERR_MODELS_EMPTY,
     ERR_INVALID_CONFIGURATION,
+    ERR_STUB_ONLY_REQUIRES_NONE,
 )
 
 
@@ -40,7 +41,7 @@ CrudMethod = Literal[
     "all",
     "none",
 ]
-OrmType = Literal["sqlmodel", "sqlalchemy"]
+OrmType = Literal["sqlmodel", "sqlalchemy", "none"]
 GenerationMode = Literal["standalone", "base", "combined"]
 CommitStrategy = Literal["commit", "flush", "none"]
 
@@ -222,6 +223,12 @@ def load_config(path: Path) -> GenrepoConfig:
         cfg = GenrepoConfig.model_validate(data)
     except ValidationError as e:  # pragma: no cover - pass-through representation
         raise ValueError(ERR_INVALID_CONFIGURATION.format(err=e)) from e
+    # If orm is 'none', force stub-only generation regardless of flags.
+    if cfg.orm == "none":
+        cfg.generation.stub_only = True
+    # If stub_only requested with concrete ORM, reject config (be explicit)
+    if cfg.generation.stub_only and cfg.orm != "none":
+        raise ValueError(ERR_STUB_ONLY_REQUIRES_NONE)
     if discover_all:
         cfg.discover_all = True
         # defaults if not provided

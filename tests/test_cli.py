@@ -41,7 +41,7 @@ def test_cli_generate_standalone(tmp_path: Path) -> None:
     cfg.write_text(
         "\n".join(
             [
-                "orm: sqlmodel",
+                "orm: none",
                 f"output_dir: {out_dir.as_posix()}",
                 "generation:",
                 "  mode: standalone",

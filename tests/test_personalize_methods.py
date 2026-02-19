@@ -48,7 +48,7 @@ def test_personalize_methods_combined_generates_todo_and_pass(tmp_path: Path) ->
 def test_personalize_methods_stub_only_generates_todo_and_pass(tmp_path: Path) -> None:
     # Stub-only standalone should also create custom stub methods (TODO + pass)
     cfg_dict = {
-        "orm": "sqlmodel",
+        "orm": "none",
         "async_mode": False,
         "generation": {"mode": "standalone", "stub_only": True},
         "allow_missing_models": True,

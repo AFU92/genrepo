@@ -7,7 +7,9 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
-{% if orm == 'sqlmodel' and not is_async %}
+{% if orm == 'none' %}
+# No ORM-specific Session type in stub-only mode
+{% elif orm == 'sqlmodel' and not is_async %}
 from sqlmodel import Session
 {% elif orm == 'sqlmodel' and is_async %}
 from sqlmodel.ext.asyncio.session import AsyncSession as Session
@@ -30,7 +32,7 @@ class {{ model_name }}Repository({{ base_class_name }}[{{ model_class }}]):
 
     # Below are TODO stubs requested in config; remove or implement.
 {% for m in personalize_methods %}
-    def {{ m }}(self, session: Session, *args, **kwargs):
+    def {{ m }}(self, session{% if orm != 'none' %}: Session{% else %}: Any{% endif %}, *args, **kwargs):
         """TODO: implement custom method '{{ m }}'."""
         pass
 

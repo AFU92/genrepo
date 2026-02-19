@@ -12,6 +12,7 @@ from genrepo.constants import (
     ERR_MODELS_INVALID_VALUE,
     ERR_MODELS_MISSING,
     ERR_MODELS_NONE,
+    ERR_STUB_ONLY_REQUIRES_NONE,
 )
 
 
@@ -125,3 +126,29 @@ def test_load_config_models_field_validation(tmp_path: Path) -> None:
     with pytest.raises(ValueError) as e4:
         load_config(p)
     assert ERR_MODELS_INVALID_VALUE in str(e4.value)
+
+
+def test_stub_only_requires_none(tmp_path: Path) -> None:
+    # stub_only with orm != none should raise a clear error
+    p = tmp_path / "cfg_stub_only_sqlmodel.yaml"
+    p.write_text(
+        "\n".join(
+            [
+                "orm: sqlmodel",
+                "output_dir: out",
+                "generation:",
+                "  mode: standalone",
+                "  stub_only: true",
+                "models:",
+                "  - name: User",
+                "    import_path: app.models.user:User",
+                "    id_field: id",
+                "    id_type: int",
+                "    methods: [none]",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError) as e:
+        load_config(p)
+    assert ERR_STUB_ONLY_REQUIRES_NONE in str(e.value)
